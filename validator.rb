@@ -7,6 +7,6 @@ class Validator
 
   # Runs computation to see if this is a valid card or not
   def valid?
-    false
+    card_number.match /6014\d+/
   end
 end
