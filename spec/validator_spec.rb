@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'validator'
+require_relative '../validator'
 
 RSpec.describe Validator do
   let(:short_card) { '1234567890' }
@@ -11,7 +11,7 @@ RSpec.describe Validator do
   context 'with a short card' do
     subject { Validator.new(short_card) }
     it 'shows short card nos as invalid' do
-      expect(subject.valid).to be_falsey
+      expect(subject).not_to be_valid
     end
   end
 end

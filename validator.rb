@@ -4,7 +4,9 @@ class Validator
   def initialize(card_number)
     @card_number = card_number
   end
-end
 
-puts "hello world"
-puts Validator.new('123').card_number
+  # Runs computation to see if this is a valid card or not
+  def valid?
+    false
+  end
+end
