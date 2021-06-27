@@ -21,4 +21,17 @@ RSpec.describe Validator do
     subject { Validator.new(valid_black_1) }
     it { is_expected.to be_valid }
   end
+
+  describe '#type' do
+    subject { Validator.new(card_number).type }
+    context 'when supplied a potential black card' do
+      let(:card_number) { '60141' }
+      it { is_expected.to eq :black }
+    end
+
+    context 'when supplied a potential red card' do
+      let(:card_number) { '6014352' }
+      it { is_expected.to eq :red }
+    end
+  end
 end
