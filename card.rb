@@ -10,11 +10,16 @@ class Card
   end
 
   def valid?
+    # Only support strings - there's too much risk of
+    # clients or us dropping leading 0's for ints
+    # Would be risky trying to cast
+    return false unless processable?
     # Matches on all generic cards, including Visa
     formatted_number.match(/^\d{16}\d?$/)
   end
 
   def formatted_number
+    return card_number.to_s unless processable?
     card_number.gsub /[- ,\.]/, ''
   end
 
@@ -24,5 +29,11 @@ class Card
 
   def matched?
     true
+  end
+
+  private
+
+  def processable?
+    card_number.class == String
   end
 end
