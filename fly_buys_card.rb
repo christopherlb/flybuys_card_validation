@@ -1,5 +1,6 @@
 require_relative 'card'
-
+# Generic FlyBuys card. You generally don't want to work with this.
+# Should have a specific type.
 class FlyBuysCard < Card
   def valid?
     card_number.match /6014\d+/

@@ -1,3 +1,7 @@
+# Represents unknown card #s, potentially not FlyBuys.
+# This is important incase a POS client messes up integration,
+# maybe they send Visa # instead of flybuys (which would be v bad!!)
+# and the only way of linking to their account is through that record
 class Card
   attr_reader :card_number
 
@@ -6,7 +10,8 @@ class Card
   end
 
   def valid?
-    card_number.match /6014\d+/
+    # Matches on all generic cards, including Visa
+    formatted_number.match(/^\d{16}\d?$/)
   end
 
   def formatted_number
