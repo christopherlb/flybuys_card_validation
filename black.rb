@@ -8,4 +8,11 @@ class Black < FlyBuysCard
   def type
     :black
   end
+
+  private
+
+  def expected_length?
+    formatted_number.length == 16 ||
+    formatted_number.length == 17
+  end
 end

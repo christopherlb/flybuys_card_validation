@@ -12,7 +12,6 @@ class Validator
   SUPPORTED_CARDS=[Red, Black, Green, Blue, FlyBuysCard, Card ]
   attr_reader :card_number
 
-
   def initialize(card_number)
     @card_number = card_number
   end
