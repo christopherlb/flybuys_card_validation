@@ -29,7 +29,7 @@ class FlyBuysCard < Card
   end
 
   def matched?
-    !!formatted_number.match(/^6014\d{12}\d?$/)
+    !!formatted_number.match(/^6014/)
   end
 
   def suffix

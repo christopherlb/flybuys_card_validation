@@ -2,46 +2,24 @@ require 'spec_helper'
 require_relative '../validator'
 
 RSpec.describe Validator do
-  let(:short_card) { '1234567890' }
-  let(:valid_black_1) { '60141016700078611' }
-  let(:valid_black_2) {'6014111100033006'}
+  it 'validates as expected' do
+    expect(Validator.validate('60141016700078611')).to eq('Fly Buys Black: 60141016700078611 (valid)')
+    expect(Validator.validate('6014152705006141')).to eq('Fly Buys Black: 6014152705006141 (invalid)')
+    expect(Validator.validate('6014111100033006')).to eq('Fly Buys Black: 6014111100033006 (valid)')
+    expect(Validator.validate('6014709045001234')).to eq('Fly Buys Blue: 6014709045001234 (valid)')
+    expect(Validator.validate('6014352700000140')).to eq('Fly Buys Red: 6014352700000140 (valid)')
+    expect(Validator.validate('6014355526000020')).to eq('Fly Buys Green: 6014355526000020 (valid)')
 
-  it 'stores the card number' do
-    expect(Validator.new(short_card).card_number).to eq(short_card)
-  end
+    # Typo in doc, 6 vs 9
+    expect(Validator.validate('6014 3555 2900 0028')).to eq('Fly Buys Green: 6014355529000028 (invalid)')
 
-  context 'with a short card' do
-    subject { Validator.new(short_card) }
-    it 'shows short card nos as invalid' do
-      expect(subject).not_to be_valid
-    end
-  end
+    # It's unclear if this is invalid 'cos not a matching card, or just cos bad math
+    # Another typo around qty of 1's here
+    expect(Validator.validate('601311111111111')).to eq('Unknown: 601311111111111 (invalid)')
 
-  context 'with a valid card' do
-    subject { Validator.new(valid_black_1) }
-    it { is_expected.to be_valid }
-  end
-
-  describe '#type' do
-    subject { Validator.new(card_number).type }
-    context 'when supplied a potential black card' do
-      let(:card_number) { '60141' }
-      it { is_expected.to eq :black }
-    end
-
-    context 'when supplied a potential red card' do
-      let(:card_number) { '6014352' }
-      it { is_expected.to eq :red }
-    end
-
-    context 'when supplied a potential blue card' do
-      let(:card_number) { '60147090' }
-      it { is_expected.to eq :blue }
-    end
-
-    context 'when supplied a potential green card' do
-      let(:card_number) { '6014355526' }
-      it { is_expected.to eq :green }
-    end
+    # Extra cases. I decided to treat cards that matched the math, but
+    # didn't belong to Fly Buys as valid.
+    expect(Validator.validate('6013111111111111')).to eq('Unknown: 6013111111111111 (valid)')
+    expect(Validator.validate('6013 0000 0000 0000')).to eq('Unknown: 6013000000000000 (valid)')
   end
 end

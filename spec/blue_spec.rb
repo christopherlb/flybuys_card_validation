@@ -8,8 +8,11 @@ RSpec.describe Blue do
     expect(Blue.new('6014709045001234')).to be_matched
     expect(Blue.new('601470')).to be_matched
     expect(Blue.new('1601435270000140')).not_to be_matched
-    expect(Blue.new('6014')).not_to be_matched
     expect(Blue.new('six014352')).not_to be_matched
+
+
+    # Interesting case - this would be invalid
+    expect(Blue.new('6014')).to be_matched
 
     # Don't match known other cards!
     expect(Blue.new('60141016700078611')).not_to be_matched

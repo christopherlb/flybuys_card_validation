@@ -10,28 +10,30 @@ class Validator
   # Blue should catch all flybuys, but add FlyBuysCard as a defensive measure
   # Card will catch everything else
   SUPPORTED_CARDS=[Red, Black, Green, Blue, FlyBuysCard, Card ]
-  attr_reader :card_number
 
-  def initialize(card_number)
-    @card_number = card_number
+  def self.validate(number)
+    match = SUPPORTED_CARDS.detect { |clazz| clazz.new(number).matched? }
+
+    # I hope this double instantiation isn't costly
+    card = match.new(number)
+
+    "#{type_to_s(card.type)}: #{card.formatted_number} (#{card.valid? ? 'valid' : 'invalid'})"
   end
 
-
-
-  # Runs computation to see if this is a valid card or not
-  def valid?
-    card_number.match /6014\d+/
-  end
-
-  def type
-    for cardClazz in SUPPORTED_CARDS do
-      card = cardClazz.new(card_number)
-      if card.matched?
-        return card.type
-      end
+  def self.type_to_s(type)
+    case type
+    when :black
+      'Fly Buys Black'
+    when :green
+      'Fly Buys Green'
+    when :blue
+      'Fly Buys Blue'
+    when :red
+      'Fly Buys Red'
+    when :flybuys
+      'Fly Buys (Unknown)'
+    else
+      'Unknown'
     end
-
-    # Shouldn't get here, Card should be a back stop
-    raise 'Not a card number'
   end
 end
