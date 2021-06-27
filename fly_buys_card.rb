@@ -1,6 +1,10 @@
 require_relative 'card'
 
 class FlyBuysCard < Card
+  def valid?
+    card_number.match /6014\d+/
+  end
+
   def matched?
     card_number.match(/^6014\d+/)
   end
