@@ -33,5 +33,15 @@ RSpec.describe Validator do
       let(:card_number) { '6014352' }
       it { is_expected.to eq :red }
     end
+
+    context 'when supplied a potential blue card' do
+      let(:card_number) { '60147090' }
+      it { is_expected.to eq :blue }
+    end
+
+    context 'when supplied a potential green card' do
+      let(:card_number) { '6014355526' }
+      it { is_expected.to eq :green }
+    end
   end
 end

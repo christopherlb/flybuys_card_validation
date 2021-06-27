@@ -1,11 +1,15 @@
 require_relative 'red'
 require_relative 'black'
+require_relative 'green'
+require_relative 'blue'
 require_relative 'fly_buys_card'
 require_relative 'card'
 
 class Validator
   # Order is important. Will match first encountered
-  SUPPORTED_CARDS=[Red, Black, FlyBuysCard, Card ]
+  # Blue should catch all flybuys, but add FlyBuysCard as a defensive measure
+  # Card will catch everything else
+  SUPPORTED_CARDS=[Red, Black, Green, Blue, FlyBuysCard, Card ]
   attr_reader :card_number
 
 
