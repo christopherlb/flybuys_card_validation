@@ -1,4 +1,11 @@
+require_relative 'red'
+require_relative 'black'
+require_relative 'fly_buys_card'
+require_relative 'card'
+
 class Validator
+  # Order is important. Will match first encountered
+  SUPPORTED_CARDS=[Red, Black, FlyBuysCard, Card ]
   attr_reader :card_number
 
 
@@ -14,13 +21,14 @@ class Validator
   end
 
   def type
-    case card_number
-    when /60141/
-      return :black
-    when /6014352/
-     :red
-    else
-      :unknown
+    for cardClazz in SUPPORTED_CARDS do
+      card = cardClazz.new(card_number)
+      if card.matched?
+        return card.type
+      end
     end
+
+    # Shouldn't get here, Card should be a back stop
+    raise 'Not a card number'
   end
 end

@@ -9,4 +9,8 @@ class FlyBuysCard < Card
     @suffix ||= card_number[4..card_number.length]
     @suffix
   end
+
+  def type
+    :flybuys
+  end
 end

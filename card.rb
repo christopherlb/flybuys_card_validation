@@ -14,7 +14,7 @@ class Card
   end
 
   def type
-    'Unknown'
+    :unknown
   end
 
   def matched?

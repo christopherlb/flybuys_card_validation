@@ -4,4 +4,8 @@ class Black < FlyBuysCard
   def matched?
     super && suffix.match(/^1/)
   end
+
+  def type
+    :black
+  end
 end
